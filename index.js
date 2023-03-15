@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
                 const roomId = data['room']
                 if(rooms[roomId]) {
                     socket.emit('message', {message: 'loadGameData', data: rooms[roomId]})
+                    socket.emit('message', {message: 'join', data: data['username']})
                 }
                 break
             case 'leave':
