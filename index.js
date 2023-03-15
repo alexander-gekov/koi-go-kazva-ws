@@ -1,9 +1,9 @@
 import express from 'express';
 import { createServer } from "http";
 import { Server } from "socket.io";
+import cors from 'cors';
 
 const app = express();
-const cors = require('cors');
 
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
