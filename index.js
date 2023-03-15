@@ -6,6 +6,12 @@ const app = express();
 const cors = require('cors');
 
 app.use(cors());
+app.use(express.static(__dirname + '/public'));
+
+app.get('/', (req, res) => {
+    return "Hello World";
+});
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {  
     cors: {
@@ -44,5 +50,7 @@ io.on('connection', (socket) => {
       });
 })
 
-httpServer.listen(8080);
+httpServer.listen(8080, () => {
+    console.log('listening on *:8080');
+})
 
