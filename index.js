@@ -26,20 +26,18 @@ io.on('connection', (socket) => {
             case 'create':
                 socket.join(data['room'])
                 rooms[data['room']] = data['data']
-                rooms[data['room']].players.push(data['username'])
+                rooms[data['room']].owner = socket.id
                 break;
             case 'join':
                 socket.join(data['room'])
                 const roomId = data['room']
                 if(rooms[roomId]) {
-                    rooms[roomId].players.push(data['username'])
                     socket.emit('message', {message: 'loadGameData', data: rooms[roomId]})
                     socket.emit('message', {message: 'join', data: data['username']})
                 }
                 break
             case 'leave':
                 socket.leave(data['room'])
-                rooms[data['room']].players.splice(rooms[data['room']].players.indexOf(data['username']), 1)
                 if(socket.rooms.size == 0) {
                     delete rooms[data['room']]
                 }
