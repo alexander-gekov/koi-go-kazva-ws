@@ -48,7 +48,13 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('disconnect', () => {
+    socket.on('disconnecting', () => {
+        socket.rooms.forEach(room => {
+            if(rooms[room]){
+                rooms[room].players.splice(rooms[room].players.indexOf(socket.id), 1)
+                socket.to(room).emit('message', {message: 'loadPlayers', data: [... new Set(rooms[room].players)]})
+            }
+        })
         console.log('user ' + socket.id + ' disconnected');
       });
 })
