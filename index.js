@@ -20,7 +20,7 @@ const io = new Server(httpServer, {
 
 const rooms = {};
 
-o.on('connection', (socket) => {
+io.on('connection', (socket) => {
     socket.on('message', (data) => {
         switch (data['message']) {
             case 'create':
